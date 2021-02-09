@@ -808,21 +808,6 @@ class Model {
   }
 
   /**
-   * Comparison by value
-   * returns `true` if this object has the same attrs and relationships
-   * as the "other" object, ignores differences in internal state like
-   * attribute "dirtyness" or errors
-   *
-   * @method isEqual
-   * @param {Object} other
-   * @return {Object}
-   */
-  isEqual (other) {
-    if (!other) return false
-    return isEqual(this.attributes, other.attributes) && isEqual(this.relationships, other.relationships)
-  }
-
-  /**
    * Comparison by identity
    * returns `true` if this object has the same type and id as the
    * "other" object, ignores differences in attrs and relationships

@@ -1081,45 +1081,6 @@ describe('Model', () => {
     })
   })
 
-  describe('.isEqual', () => {
-    let original
-    beforeEach(() => {
-      const note = store.add('notes', {
-        id: 11,
-        description: 'Example description'
-      })
-      original = store.add('organizations', {
-        id: 11,
-        title: 'Buy Milk',
-        options: { color: 'green' }
-      })
-      original.notes.add(note)
-    })
-
-    it('is true for a clone and the original', () => {
-      const clone = original.clone()
-      expect(original.isEqual(clone)).toBe(true)
-    })
-
-    it('is false after attr differences', () => {
-      const clone = original.clone()
-      original.title = 'Buy Cheese'
-      expect(original.isEqual(clone)).toBe(false)
-    })
-
-    it('is false after deep attr changes', () => {
-      const clone = original.clone()
-      original.options.color = 'blue'
-      expect(original.isEqual(clone)).toBe(false)
-    })
-
-    it('is false after a change in relationships', () => {
-      const clone = original.clone()
-      clone.notes.replace([])
-      expect(original.isEqual(clone)).toBe(false)
-    })
-  })
-
   describe('.isSame', () => {
     let original
     beforeEach(() => {
