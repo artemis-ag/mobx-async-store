@@ -19,7 +19,7 @@ import pluralize from 'pluralize';
 import dig from 'lodash/get';
 import flattenDeep from 'lodash/flattenDeep';
 import cloneDeep from 'lodash/cloneDeep';
-import _isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import findLast from 'lodash/findLast';
 import _assertThisInitialized from '@babel/runtime/helpers/assertThisInitialized';
@@ -253,7 +253,7 @@ function diff() {
 function parseErrorPointer() {
   var error = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-  var regex = /*#__PURE__*/_wrapRegExp(/\/data\/([0-9]+)?\/?attributes\/(.*)$/, {
+  var regex = _wrapRegExp(/\/data\/([0-9]+)?\/?attributes\/(.*)$/, {
     index: 1,
     key: 2
   });
@@ -332,7 +332,9 @@ function ObjectPromiseProxy(promise, target) {
  *
  * @class Schema
  */
-var Schema = /*#__PURE__*/function () {
+var Schema =
+/*#__PURE__*/
+function () {
   function Schema() {
     _classCallCheck(this, Schema);
 
@@ -460,7 +462,9 @@ function stringifyIds(object) {
  */
 
 
-var Model = (_class = (_temp = /*#__PURE__*/function () {
+var Model = (_class = (_temp =
+/*#__PURE__*/
+function () {
   /**
    * Initializer for model
    *
@@ -666,8 +670,12 @@ var Model = (_class = (_temp = /*#__PURE__*/function () {
       var _this = this;
 
       _this.errors = {};
-      return promise.then( /*#__PURE__*/function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(response) {
+      return promise.then(
+      /*#__PURE__*/
+      function () {
+        var _ref = _asyncToGenerator(
+        /*#__PURE__*/
+        _regeneratorRuntime.mark(function _callee(response) {
           var json;
           return _regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
@@ -753,7 +761,7 @@ var Model = (_class = (_temp = /*#__PURE__*/function () {
     key: "_makeObservable",
     value: function _makeObservable(initialAttributes) {
       var defaultAttributes = this.defaultAttributes;
-      extendObservable(this, _objectSpread$1(_objectSpread$1({}, defaultAttributes), initialAttributes));
+      extendObservable(this, _objectSpread$1({}, defaultAttributes, {}, initialAttributes));
 
       this._listenForChanges();
     }
@@ -778,7 +786,7 @@ var Model = (_class = (_temp = /*#__PURE__*/function () {
         }, function (value) {
           var previousValue = _this3.previousSnapshot.attributes[attr];
 
-          if (_isEqual(previousValue, value)) {
+          if (isEqual(previousValue, value)) {
             _this3._dirtyAttributes.delete(attr);
           } else if (isObject(value)) {
             // handles Objects and Arrays
@@ -1087,23 +1095,6 @@ var Model = (_class = (_temp = /*#__PURE__*/function () {
       });
     }
     /**
-     * Comparison by value
-     * returns `true` if this object has the same attrs and relationships
-     * as the "other" object, ignores differences in internal state like
-     * attribute "dirtyness" or errors
-     *
-     * @method isEqual
-     * @param {Object} other
-     * @return {Object}
-     */
-
-  }, {
-    key: "isEqual",
-    value: function isEqual(other) {
-      if (!other) return false;
-      return _isEqual(this.attributes, other.attributes) && _isEqual(this.relationships, other.relationships);
-    }
-    /**
      * Comparison by identity
      * returns `true` if this object has the same type and id as the
      * "other" object, ignores differences in attrs and relationships
@@ -1389,7 +1380,9 @@ function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { 
  * @constructor
  */
 
-var Store = (_class$1 = (_temp$1 = /*#__PURE__*/function () {
+var Store = (_class$1 = (_temp$1 =
+/*#__PURE__*/
+function () {
   /**
    * Observable property used to store data and
    * handle changes to state
@@ -1441,8 +1434,12 @@ var Store = (_class$1 = (_temp$1 = /*#__PURE__*/function () {
       });
     };
 
-    this.bulkSave = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(type, records) {
+    this.bulkSave =
+    /*#__PURE__*/
+    function () {
+      var _ref = _asyncToGenerator(
+      /*#__PURE__*/
+      _regeneratorRuntime.mark(function _callee(type, records) {
         var options,
             queryParams,
             extensions,
@@ -1469,10 +1466,10 @@ var Store = (_class$1 = (_temp$1 = /*#__PURE__*/function () {
                   data: recordAttributes
                 }); // build the json api extension string
 
-                extensionStr = extensions !== null && extensions !== void 0 && extensions.length ? "ext=\"bulk,".concat(extensions.join(), "\"") : 'ext="bulk"'; // send request
+                extensionStr = (extensions === null || extensions === void 0 ? void 0 : extensions.length) ? "ext=\"bulk,".concat(extensions.join(), "\"") : 'ext="bulk"'; // send request
 
                 response = _this.fetch(url, {
-                  headers: _objectSpread$2(_objectSpread$2({}, _this.defaultFetchOptions.headers), {}, {
+                  headers: _objectSpread$2({}, _this.defaultFetchOptions.headers, {
                     'Content-Type': "application/vnd.api+json; ".concat(extensionStr)
                   }),
                   method: 'POST',
@@ -1777,14 +1774,14 @@ var Store = (_class$1 = (_temp$1 = /*#__PURE__*/function () {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var defaultFetchOptions = this.defaultFetchOptions;
 
-      var fetchOptions = _objectSpread$2(_objectSpread$2({}, defaultFetchOptions), options);
+      var fetchOptions = _objectSpread$2({}, defaultFetchOptions, {}, options);
 
       var key = JSON.stringify({
         url: url,
         fetchOptions: fetchOptions
       });
       return combineRacedRequests(key, function () {
-        return fetch(url, _objectSpread$2(_objectSpread$2({}, defaultFetchOptions), options));
+        return fetch(url, _objectSpread$2({}, defaultFetchOptions, {}, options));
       });
     })
     /**
@@ -2013,7 +2010,7 @@ var Store = (_class$1 = (_temp$1 = /*#__PURE__*/function () {
             // Don't try to create relationship if meta included false
             if (!relationships[key].meta) {
               // defensive against existingRecord.relationships being undefined
-              set(record, 'relationships', _objectSpread$2(_objectSpread$2({}, record.relationships), {}, _defineProperty({}, key, relationships[key])));
+              set(record, 'relationships', _objectSpread$2({}, record.relationships, _defineProperty({}, key, relationships[key])));
             }
           });
         }
@@ -2113,7 +2110,9 @@ var Store = (_class$1 = (_temp$1 = /*#__PURE__*/function () {
   }, {
     key: "fetchAll",
     value: function () {
-      var _fetchAll = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(type, queryParams) {
+      var _fetchAll = _asyncToGenerator(
+      /*#__PURE__*/
+      _regeneratorRuntime.mark(function _callee2(type, queryParams) {
         var _this5 = this;
 
         var store, url, response, json;
@@ -2199,7 +2198,9 @@ var Store = (_class$1 = (_temp$1 = /*#__PURE__*/function () {
   }, {
     key: "fetchOne",
     value: function () {
-      var _fetchOne = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(type, id, queryParams) {
+      var _fetchOne = _asyncToGenerator(
+      /*#__PURE__*/
+      _regeneratorRuntime.mark(function _callee3(type, id, queryParams) {
         var url, response, json, data, included, record;
         return _regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
@@ -2272,8 +2273,12 @@ var Store = (_class$1 = (_temp$1 = /*#__PURE__*/function () {
       recordsArray.forEach(function (record) {
         record.isInFlight = true;
       });
-      return promise.then( /*#__PURE__*/function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(response) {
+      return promise.then(
+      /*#__PURE__*/
+      function () {
+        var _ref3 = _asyncToGenerator(
+        /*#__PURE__*/
+        _regeneratorRuntime.mark(function _callee4(response) {
           var status, json, data, included, _json, errorString;
 
           return _regeneratorRuntime.wrap(function _callee4$(_context4) {
@@ -2542,10 +2547,6 @@ function validates(target, property) {
 
 var _Symbol$species;
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2675,13 +2676,13 @@ function getRelatedRecords(record, property) {
 
       var allRecords = record.store.getRecords(relationType);
 
-      if (allRecords !== null && allRecords !== void 0 && (_allRecords$ = allRecords[0]) !== null && _allRecords$ !== void 0 && (_allRecords$$relation = _allRecords$.relationships) !== null && _allRecords$$relation !== void 0 && (_allRecords$$relation2 = _allRecords$$relation[foreignReferenceName]) !== null && _allRecords$$relation2 !== void 0 && _allRecords$$relation2.data) {
+      if (allRecords === null || allRecords === void 0 ? void 0 : (_allRecords$ = allRecords[0]) === null || _allRecords$ === void 0 ? void 0 : (_allRecords$$relation = _allRecords$.relationships) === null || _allRecords$$relation === void 0 ? void 0 : (_allRecords$$relation2 = _allRecords$$relation[foreignReferenceName]) === null || _allRecords$$relation2 === void 0 ? void 0 : _allRecords$$relation2.data) {
         relatedRecords = allRecords.filter(function (rel) {
           var _rel$relationships$fo, _rel$relationships$fo2;
 
           return String((_rel$relationships$fo = rel.relationships[foreignReferenceName]) === null || _rel$relationships$fo === void 0 ? void 0 : (_rel$relationships$fo2 = _rel$relationships$fo.data) === null || _rel$relationships$fo2 === void 0 ? void 0 : _rel$relationships$fo2.id) === String(record.id);
         });
-      } else if (allRecords !== null && allRecords !== void 0 && (_allRecords$2 = allRecords[0]) !== null && _allRecords$2 !== void 0 && _allRecords$2[foreignId]) {
+      } else if (allRecords === null || allRecords === void 0 ? void 0 : (_allRecords$2 = allRecords[0]) === null || _allRecords$2 === void 0 ? void 0 : _allRecords$2[foreignId]) {
         console.warn("Support for including non-canonical jsonapi references will be removed in future versions. Record type: ".concat(record.type, ". Relation: ").concat(relationType, ". Reference: ").concat(foreignId, "."));
         relatedRecords = allRecords.filter(function (rel) {
           return String(rel[foreignId]) === String(record.id);
@@ -2689,7 +2690,7 @@ function getRelatedRecords(record, property) {
       }
     }
 
-    record.cachedRelationships = _objectSpread$3(_objectSpread$3({}, cachedRelationships), {}, _defineProperty({}, relationType, {
+    record.cachedRelationships = _objectSpread$3({}, cachedRelationships, _defineProperty({}, relationType, {
       data: relatedRecords.map(function (r) {
         return {
           type: r.type,
@@ -2795,17 +2796,19 @@ function setRelatedRecord(record, relatedRecord, property) {
  */
 
 _Symbol$species = Symbol.species;
-var RelatedRecordsArray = /*#__PURE__*/function (_Array) {
+var RelatedRecordsArray =
+/*#__PURE__*/
+function (_Array) {
   _inherits(RelatedRecordsArray, _Array);
 
-  var _super = _createSuper(RelatedRecordsArray);
-
   function RelatedRecordsArray(_array, _record, _property) {
+    var _getPrototypeOf2;
+
     var _this;
 
     _classCallCheck(this, RelatedRecordsArray);
 
-    _this = _super.call.apply(_super, [this].concat(_toConsumableArray(_array)));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(RelatedRecordsArray)).call.apply(_getPrototypeOf2, [this].concat(_toConsumableArray(_array))));
 
     _this.add = function (relatedRecord) {
       var _assertThisInitialize = _assertThisInitialized(_this),
@@ -2945,6 +2948,6 @@ var RelatedRecordsArray = /*#__PURE__*/function (_Array) {
   }]);
 
   return RelatedRecordsArray;
-}( /*#__PURE__*/_wrapNativeSuper(Array));
+}(_wrapNativeSuper(Array));
 
 export { Model, ObjectPromiseProxy, QueryString, Store, attribute, relatedToMany, relatedToOne, validates };
