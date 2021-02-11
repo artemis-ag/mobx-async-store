@@ -3,7 +3,7 @@
         "name": "mobx-async-store",
         "description": "Asyc Data Store for mobx",
         "url": "https://github.com/artemis-ag/mobx-async-store",
-        "version": "3.2.7"
+        "version": "4.2.7"
     },
     "files": {
         "src/decorators/attributes.js": {
